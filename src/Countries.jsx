@@ -1,5 +1,52 @@
 import { useState, useEffect } from "react";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
+
+
+const SearchBar = ({setFilterData,countries}) => {
+    const [text,setText] = useState("");
+
+    const search = (text) => {
+        if(text === ""){
+            // console.log(countries);
+            
+            setFilterData(countries);
+            return;
+        }
+
+        const filtered = countries.filter((country)=>(
+            country.common.toLowerCase().includes(text.toLowerCase())        
+        ))
+        if(text !== ""){
+            setFilterData(filtered)
+        } 
+        // 
+    }
+
+    useEffect(()=> {
+        let timerId = setTimeout(()=>{
+            search(text);
+        },500)
+        return () => {clearTimeout(timerId)}
+    },[text])
+     
+    
+    const handleChange = (e) => {
+        setText(e.target.value)
+    }
+
+    return(
+        <div className="header" style={{ 
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#F8F8F8" , 
+            height:"50px" }}>
+            <input type="text" style={{width: "50%", height:"16px", padding: "5px"}} 
+             onChange={handleChange}
+             placeholder="Search for countries" />
+        </div>
+    );
+}
 
 const Flag = ({ country,flag }) => {
   return (  <div className="countryCard" 
@@ -45,8 +92,8 @@ export default function Flags() {
 
   return (
         <div>
-            <SearchBar filterData={filterData} setFilterData={setFilterData} countries={countries} />
-            <div className="countryCard" style={{
+            <SearchBar setFilterData={setFilterData} countries={countries} />
+            <div className="flags" style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
