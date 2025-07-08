@@ -2,21 +2,23 @@ import { useEffect,useState } from "react";
 
 
 const SearchBar = ({filterData,setFilterData,countries}) => {
-    const [text,setText] = useState("");
+    const [text,setText] = useState();
 
 
 
     const search = (text) => {
 
         if(text === ""){
+            // console.log(countries);
+            
             setFilterData(countries);
             return;
         }
 
-        filterData = countries.filter((country)=>(
+        const filtered = countries.filter((country)=>(
             country.common.includes(text)
         ))
-        setFilterData(filterData);
+        setFilterData(filtered);
     }
 
     useEffect(()=> {

@@ -30,7 +30,8 @@ export default function Flags() {
             const response = await fetch(url);
             const data = await response.json();
             setCountries(data);
-            setFilterData(data)
+            setFilterData(data);
+            
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -38,6 +39,8 @@ export default function Flags() {
     };
     fetchData();
   }, []);
+
+  console.log(filterData);
 
 
   return (
